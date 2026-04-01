@@ -1,0 +1,14 @@
+{
+  "train_path": "data/raw/train.json",
+  "test_path": "data/raw/test.json",
+  "model_path": "models/tfidf_logreg.joblib",
+  "metrics_path": "reports/train_metrics.json",
+  "submission_path": "data/submissions/submission.csv",
+  "test_size": 0.2,
+  "random_state": 42,
+  "ngram_min": 1,
+  "ngram_max": 2,
+  "max_features": 50000,
+  "min_df": 2,
+  "regularization_c": 4.0
+}

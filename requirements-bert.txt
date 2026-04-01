@@ -1,0 +1,8 @@
+# Optional deep-learning stack (install only if needed for BERT/RNN experiments)
+torch>=2.2.0
+transformers>=4.40.0
+accelerate>=0.29.0
+datasets>=2.18.0
+sentencepiece>=0.2.0
+evaluate>=0.4.0
+tokenizers>=0.15.0

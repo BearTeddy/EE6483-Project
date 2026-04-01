@@ -1,0 +1,28 @@
+{
+  "model_names": [
+    "tfidf_logreg",
+    "tfidf_svm",
+    "tfidf_nb",
+    "tfidf_xgboost",
+    "tfidf_lightgbm"
+  ],
+  "shared_settings": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "ngram_min": 1,
+    "ngram_max": 2,
+    "max_features": 50000,
+    "min_df": 2
+  },
+  "model_specific": {
+    "tfidf_logreg": {
+      "regularization_c": 4.0
+    },
+    "tfidf_svm": {
+      "regularization_c": 1.0
+    },
+    "tfidf_nb": {
+      "alpha": 0.1
+    }
+  }
+}

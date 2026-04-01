@@ -1,0 +1,23 @@
+{
+  "model_types": [
+    "textcnn",
+    "bilstm",
+    "bigru"
+  ],
+  "settings": {
+    "test_size": 0.2,
+    "random_state": 42,
+    "batch_size": 64,
+    "max_length": 160,
+    "max_vocab_size": 30000,
+    "min_freq": 2,
+    "embedding_dim": 128,
+    "hidden_dim": 128,
+    "num_layers": 1,
+    "num_filters": 128,
+    "dropout": 0.3,
+    "learning_rate": 0.001,
+    "weight_decay": 1e-05,
+    "epochs": 8
+  }
+}

@@ -37,3 +37,27 @@ Thumbs.db
 .vscode/
 *.sublime-project
 *.sublime-workspace
+
+# AI agent / Copilot metadata
+.agents/
+.agent/
+.codex/
+.copilot/
+.github/.copilot/
+.github/copilot*.md
+
+# Local helper utilities
+scripts/cleanup_artifacts.py
+
+# Local artifacts
+models/*.joblib
+models/*.pt
+models/*/
+!models/.gitkeep
+reports/*.json
+reports/comparison/*
+!reports/comparison/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/submissions/*
+!data/submissions/.gitkeep

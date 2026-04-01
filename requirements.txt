@@ -1,23 +1,26 @@
 # Core data analysis libraries
-numpy>=1.24.0
-pandas>=2.0.0
-scipy>=1.10.0
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.12.0
 
 # Visualization
-matplotlib>=3.7.0
-seaborn>=0.12.0
-plotly>=5.14.0
+matplotlib>=3.8.0
+seaborn>=0.13.0
+plotly>=5.20.0
 
-# Machine learning
-scikit-learn>=1.2.0
+# Machine learning / NLP baseline
+scikit-learn>=1.4.0
+joblib>=1.3.0
+xgboost>=2.0.0
+lightgbm>=4.3.0
 
 # Jupyter / notebook support
 jupyter>=1.0.0
-notebook>=7.0.0
-ipykernel>=6.22.0
-ipywidgets>=8.0.0
-nbformat>=5.8.0
+notebook>=7.2.0
+ipykernel>=6.29.0
+ipywidgets>=8.1.0
+nbformat>=5.10.0
 
 # Utilities
-tqdm>=4.65.0
+tqdm>=4.66.0
 python-dotenv>=1.0.0
