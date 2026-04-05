@@ -10,9 +10,15 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from sentiment_project.data import REVIEW_COL, load_test_dataframe, load_train_dataframe
-from sentiment_project.inference import build_submission_dataframe, save_submission_csv
-from sentiment_project.torch_training import (
+from sentiment_project.core import (
+    REVIEW_COL,
+    build_experiment_paths,
+    build_submission_dataframe,
+    load_test_dataframe,
+    load_train_dataframe,
+    save_submission_csv,
+)
+from sentiment_project.deep_learning import (
     predict_neural_texts,
     save_neural_checkpoint,
     train_neural_text_classifier,
@@ -50,9 +56,15 @@ def main() -> None:
     train_df = load_train_dataframe(args.train_path)
     test_df = load_test_dataframe(args.test_path)
 
-    checkpoint_path = args.checkpoint_path or (PROJECT_ROOT / "models" / f"{args.model_type}.pt")
-    metrics_path = args.metrics_path or (PROJECT_ROOT / "reports" / f"{args.model_type}_metrics.json")
-    submission_path = args.submission_path or (PROJECT_ROOT / "data" / "submissions" / f"submission_{args.model_type}.csv")
+    experiment_paths = build_experiment_paths(
+        PROJECT_ROOT,
+        args.model_type,
+        test_size=args.test_size,
+        seed=args.random_state,
+    )
+    checkpoint_path = args.checkpoint_path or (experiment_paths["model_dir"] / "model.pt")
+    metrics_path = args.metrics_path or (experiment_paths["reports_dir"] / "metrics.json")
+    submission_path = args.submission_path or (experiment_paths["submission_dir"] / "submission.csv")
 
     model, vocab, metrics = train_neural_text_classifier(
         train_df,

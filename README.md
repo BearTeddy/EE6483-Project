@@ -84,6 +84,23 @@ Implemented model families:
 python scripts/train_classical_models.py --model-names all --generate-submissions
 ```
 
+Run a split/seed sweep explicitly:
+
+```bash
+python scripts/train_classical_models.py --model-names all --test-sizes 0.2 0.3 0.4 --seeds 42 52 62
+```
+
+Each run is saved separately under:
+
+- `models/experiments/<model>/test_size_<ratio>/seed_<seed>/`
+- `reports/experiments/<model>/test_size_<ratio>/seed_<seed>/metrics.json`
+- `data/submissions/experiments/<model>/test_size_<ratio>/seed_<seed>/submission.csv`
+
+The classical benchmark script also saves:
+
+- raw run ledger: `reports/classical_model_runs.csv`
+- aggregated leaderboard: `reports/classical_model_leaderboard.csv`
+
 ### Neural models
 
 ```bash
@@ -117,11 +134,19 @@ python scripts/generate_comparison_report.py
 
 Comparison outputs are saved under `reports/comparison/`, including:
 
+- `comparison_runs.csv` with one row per `(model_name, test_size, seed)`
 - `comparison_results.csv` and `comparison_results.md`
 - `metrics_comparison_bar.png`
 - per-model confusion matrices in `reports/comparison/confusion_matrices/`
 - `confusion_matrix_comparison_grid.png`
 - `confusion_pattern_comparison.png`
+
+Each saved metrics file now records:
+
+- `seed`
+- `test_size`
+- `split_metadata` with train/validation counts and class balance
+- `timing` with fit, evaluation, and total runtime
 
 Note: generate metrics first (for example via `train_classical_models.py`, `train_neural_model.py`, `train_transformer.py`) so the comparison script has inputs to aggregate.
 

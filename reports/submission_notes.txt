@@ -1,0 +1,136 @@
+EE6483 Sentiment Project Notes
+
+Main setup
+- Task: binary document-level sentiment classification on product reviews
+- Train set: 7,401 reviews
+- Test set: 1,851 reviews
+- Train labels are imbalanced: 6,319 positive, 1,082 negative
+- Main evaluation focus: macro-F1, because accuracy alone can hide minority-class errors
+
+Literature summary
+- Classical sentiment baselines remain strong for review classification:
+  Pang et al. 2002, https://aclanthology.org/W02-1011/
+- Unsupervised sentiment is possible with polarity phrases / semantic orientation:
+  Turney 2002, https://arxiv.org/abs/cs/0212032
+- Domain shift is a real issue in sentiment analysis:
+  Blitzer et al. 2007, https://aclanthology.org/P07-1056/
+- Pretrained transformers became the dominant upgrade path:
+  BERT, https://arxiv.org/abs/1810.04805
+  RoBERTa, https://arxiv.org/abs/1907.11692
+  DeBERTa, https://openreview.net/forum?id=XPZIaotutsD
+- Domain-adaptive pretraining is useful when moving to new review domains:
+  Gururangan et al. 2020, https://aclanthology.org/2020.acl-main.740/
+- Sentiment-aware pretraining is a natural improvement beyond generic transformers:
+  SKEP, https://aclanthology.org/2020.acl-main.374/
+  SentiLARE, https://aclanthology.org/2020.emnlp-main.567/
+
+Chosen baseline
+- Feature format: TF-IDF word unigrams + bigrams
+- Model: Logistic Regression
+- Why:
+  - strong on lexical review sentiment
+  - fast and reproducible
+  - best macro-F1 among available models in this environment
+
+Preprocessing used
+- remove missing rows
+- cast review text to string
+- cast labels to int and validate labels are only 0/1
+- lowercase
+- strip unicode accents
+- remove English stopwords
+- TF-IDF with:
+  - ngram_range=(1, 2)
+  - max_features=50,000
+  - min_df=2
+  - sublinear_tf=True
+
+Model settings
+- Logistic Regression with:
+  - C=4.0
+  - solver=liblinear
+  - class_weight=balanced
+  - max_iter=2000
+- Reproducibility:
+  - stratified train/test split
+  - seeds: 42, 52, 62
+  - compared holdout sizes: 0.2, 0.3, 0.4
+
+Benchmark summary
+- Total classical benchmark runs: 27
+- Models compared:
+  - TF-IDF + Logistic Regression
+  - TF-IDF + LinearSVM
+  - TF-IDF + MultinomialNB
+
+Average results over seeds 42/52/62
+- TF-IDF + Logistic Regression
+  - 20% holdout: accuracy 0.9219, macro-F1 0.8461
+  - 30% holdout: accuracy 0.9176, macro-F1 0.8354
+  - 40% holdout: accuracy 0.9141, macro-F1 0.8273
+- TF-IDF + LinearSVM
+  - 20% holdout: accuracy 0.9251, macro-F1 0.8391
+  - 30% holdout: accuracy 0.9184, macro-F1 0.8213
+  - 40% holdout: accuracy 0.9152, macro-F1 0.8134
+- TF-IDF + MultinomialNB
+  - 20% holdout: accuracy 0.8911, macro-F1 0.6854
+  - 30% holdout: accuracy 0.8886, macro-F1 0.6721
+  - 40% holdout: accuracy 0.8856, macro-F1 0.6592
+
+Main result takeaways
+- Best overall choice: TF-IDF + Logistic Regression
+- Best holdout size in this study: 20%
+- SVM had slightly higher accuracy at 20%, but Logistic Regression had better macro-F1
+- Naive Bayes was fastest, but clearly weaker on balanced performance
+- Larger holdout sizes reduced training data and generally reduced macro-F1
+
+Error analysis notes
+- Correct positive example:
+  "Very happy with these, they're very comfortable - and TWO colors each. Pleased with transaction"
+- Correct negative example:
+  "So cheap, the seams weren't sewn up all the way. Am returning"
+- Likely noisy-label examples:
+  - "Dilvered quickly in time for Christmas. Sweatshirt was great quality"
+  - "My tween daughter loves these Saucony Jazz shoes... comfortable and stylish..."
+- Example showing mixed sentiment difficulty:
+  - shipping/service complaints can dominate even when product content is partly positive
+
+Feature trade-off notes
+- TF-IDF:
+  - cheapest and easiest baseline
+  - strong for explicit polarity words
+  - weaker for deeper context and domain shift
+- CNN/RNN token sequences:
+  - better order sensitivity
+  - slower and more tuning-heavy
+- Transformers:
+  - best semantic modeling and transfer potential
+  - highest compute and dependency cost
+
+Transfer to hotel reviews without ratings
+- Current model would partly transfer because generic polarity words still matter
+- Performance would likely drop due to domain shift
+- Best fixes:
+  - collect hotel-domain text
+  - do domain-adaptive pretraining or self-training
+  - fine-tune on a small hotel-review labeled set if available
+
+Noisy-label scenario
+- Expected effect:
+  - inconsistent labels hurt both training and evaluation reliability
+- Three improvements:
+  - label-error detection / confident learning
+  - noise-robust training or sample reweighting
+  - semi-supervised retraining with high-confidence clean anchors
+
+Final submission
+- File kept for submission: data/submissions/submission.csv
+- Rows: 1,851
+- Predicted positives: 1,556
+- Predicted negatives: 295
+
+Reproducible commands
+- Benchmark:
+  python scripts/train_classical_models.py --model-names all --test-sizes 0.2 0.3 0.4 --seeds 42 52 62
+- Full-data submission:
+  python scripts/train_full_classical_submission.py --model-name tfidf_logreg

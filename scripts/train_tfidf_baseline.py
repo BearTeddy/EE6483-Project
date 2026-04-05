@@ -10,8 +10,7 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from sentiment_project.data import load_train_dataframe
-from sentiment_project.training import save_artifacts, train_and_evaluate
+from sentiment_project.core import load_train_dataframe, save_artifacts, train_and_evaluate
 
 
 def parse_args() -> argparse.Namespace:

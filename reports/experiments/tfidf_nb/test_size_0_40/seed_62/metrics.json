@@ -1,0 +1,92 @@
+{
+  "model_name": "tfidf_nb",
+  "seed": 62,
+  "test_size": 0.4,
+  "num_samples": 7401,
+  "train_samples": 4440,
+  "validation_samples": 2961,
+  "accuracy": 0.8868625464370146,
+  "macro_f1": 0.6603889280905177,
+  "confusion_matrix": [
+    [
+      104,
+      329
+    ],
+    [
+      6,
+      2522
+    ]
+  ],
+  "classification_report": {
+    "0": {
+      "precision": 0.9454545454545454,
+      "recall": 0.24018475750577367,
+      "f1-score": 0.3830570902394107,
+      "support": 433.0
+    },
+    "1": {
+      "precision": 0.8846018940722553,
+      "recall": 0.997626582278481,
+      "f1-score": 0.9377207659416248,
+      "support": 2528.0
+    },
+    "accuracy": 0.8868625464370146,
+    "macro avg": {
+      "precision": 0.9150282197634003,
+      "recall": 0.6189056698921274,
+      "f1-score": 0.6603889280905177,
+      "support": 2961.0
+    },
+    "weighted avg": {
+      "precision": 0.8935006438353528,
+      "recall": 0.8868625464370146,
+      "f1-score": 0.8566098670631855,
+      "support": 2961.0
+    }
+  },
+  "split_metadata": {
+    "seed": 62,
+    "test_size": 0.4,
+    "num_samples": 7401,
+    "train_samples": 4440,
+    "validation_samples": 2961,
+    "train_fraction_observed": 0.5999189298743413,
+    "validation_fraction_observed": 0.4000810701256587,
+    "train_label_distribution": {
+      "counts": {
+        "0": 649,
+        "1": 3791
+      },
+      "fractions": {
+        "0": 0.14617117117117118,
+        "1": 0.8538288288288288
+      },
+      "total": 4440
+    },
+    "validation_label_distribution": {
+      "counts": {
+        "0": 433,
+        "1": 2528
+      },
+      "fractions": {
+        "0": 0.14623438027693347,
+        "1": 0.8537656197230665
+      },
+      "total": 2961
+    }
+  },
+  "timing": {
+    "fit_seconds": 0.2061647910013562,
+    "eval_seconds": 0.05836183300016273,
+    "total_seconds": 0.2707447909997427
+  },
+  "settings": {
+    "test_size": 0.4,
+    "random_state": 62,
+    "ngram_min": 1,
+    "ngram_max": 2,
+    "max_features": 50000,
+    "min_df": 2,
+    "alpha": 0.1
+  }
+}

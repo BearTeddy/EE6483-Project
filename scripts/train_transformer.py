@@ -10,9 +10,15 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from sentiment_project.data import REVIEW_COL, load_test_dataframe, load_train_dataframe
-from sentiment_project.inference import build_submission_dataframe, save_submission_csv
-from sentiment_project.transformer_training import predict_transformer_texts, train_transformer_classifier
+from sentiment_project.core import (
+    REVIEW_COL,
+    build_experiment_paths,
+    build_submission_dataframe,
+    load_test_dataframe,
+    load_train_dataframe,
+    save_submission_csv,
+)
+from sentiment_project.deep_learning import predict_transformer_texts, train_transformer_classifier
 
 
 def parse_args() -> argparse.Namespace:
@@ -46,10 +52,16 @@ def model_alias(model_name: str) -> str:
 def main() -> None:
     args = parse_args()
     alias = model_alias(args.model_name)
+    experiment_paths = build_experiment_paths(
+        PROJECT_ROOT,
+        alias,
+        test_size=args.test_size,
+        seed=args.random_state,
+    )
 
-    output_dir = args.output_dir or (PROJECT_ROOT / "models" / alias)
-    metrics_path = args.metrics_path or (PROJECT_ROOT / "reports" / f"{alias}_metrics.json")
-    submission_path = args.submission_path or (PROJECT_ROOT / "data" / "submissions" / f"submission_{alias}.csv")
+    output_dir = args.output_dir or experiment_paths["model_dir"]
+    metrics_path = args.metrics_path or (experiment_paths["reports_dir"] / "metrics.json")
+    submission_path = args.submission_path or (experiment_paths["submission_dir"] / "submission.csv")
 
     train_df = load_train_dataframe(args.train_path)
     test_df = load_test_dataframe(args.test_path)

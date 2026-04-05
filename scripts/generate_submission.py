@@ -9,9 +9,14 @@ SRC_DIR = PROJECT_ROOT / "src"
 if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
-from sentiment_project.data import REVIEW_COL, load_test_dataframe
-from sentiment_project.inference import build_submission_dataframe, save_submission_csv
-from sentiment_project.training import load_model, predict_texts
+from sentiment_project.core import (
+    REVIEW_COL,
+    build_submission_dataframe,
+    load_model,
+    load_test_dataframe,
+    predict_texts,
+    save_submission_csv,
+)
 
 
 def parse_args() -> argparse.Namespace:

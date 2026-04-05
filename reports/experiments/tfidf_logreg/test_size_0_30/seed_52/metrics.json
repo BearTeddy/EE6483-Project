@@ -1,0 +1,92 @@
+{
+  "model_name": "tfidf_logreg",
+  "seed": 52,
+  "test_size": 0.3,
+  "num_samples": 7401,
+  "train_samples": 5180,
+  "validation_samples": 2221,
+  "accuracy": 0.9171544349392166,
+  "macro_f1": 0.8329195817347477,
+  "confusion_matrix": [
+    [
+      230,
+      95
+    ],
+    [
+      89,
+      1807
+    ]
+  ],
+  "classification_report": {
+    "0": {
+      "precision": 0.7210031347962382,
+      "recall": 0.7076923076923077,
+      "f1-score": 0.7142857142857143,
+      "support": 325.0
+    },
+    "1": {
+      "precision": 0.9500525762355415,
+      "recall": 0.9530590717299579,
+      "f1-score": 0.9515534491837809,
+      "support": 1896.0
+    },
+    "accuracy": 0.9171544349392166,
+    "macro avg": {
+      "precision": 0.8355278555158898,
+      "recall": 0.8303756897111327,
+      "f1-score": 0.8329195817347477,
+      "support": 2221.0
+    },
+    "weighted avg": {
+      "precision": 0.9165356611217308,
+      "recall": 0.9171544349392166,
+      "f1-score": 0.9168339472288635,
+      "support": 2221.0
+    }
+  },
+  "split_metadata": {
+    "seed": 52,
+    "test_size": 0.3,
+    "num_samples": 7401,
+    "train_samples": 5180,
+    "validation_samples": 2221,
+    "train_fraction_observed": 0.6999054181867316,
+    "validation_fraction_observed": 0.3000945818132685,
+    "train_label_distribution": {
+      "counts": {
+        "0": 757,
+        "1": 4423
+      },
+      "fractions": {
+        "0": 0.14613899613899614,
+        "1": 0.8538610038610038
+      },
+      "total": 5180
+    },
+    "validation_label_distribution": {
+      "counts": {
+        "0": 325,
+        "1": 1896
+      },
+      "fractions": {
+        "0": 0.14633048176497074,
+        "1": 0.8536695182350292
+      },
+      "total": 2221
+    }
+  },
+  "timing": {
+    "fit_seconds": 0.3678797089996806,
+    "eval_seconds": 0.06477524999900197,
+    "total_seconds": 0.4445252910009003
+  },
+  "settings": {
+    "test_size": 0.3,
+    "random_state": 52,
+    "ngram_min": 1,
+    "ngram_max": 2,
+    "max_features": 50000,
+    "min_df": 2,
+    "regularization_c": 4.0
+  }
+}
